@@ -8,7 +8,8 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
     minifyHTML = require('gulp-minify-html'),
-    jsonminify = require('gulp-jsonminify');
+    jsonminify = require('gulp-jsonminify'),
+    minifyCSS = require ('gulp-minify-css');
 
 var env, coffeeSources, jsSources, sassSources, htmlSources, outputDir, sassStyle;
 
@@ -56,6 +57,7 @@ gulp.task('compass', function() {
       style: sassStyle
     })
     .on('error', gutil.log))
+    .pipe(gulpif(env === 'production', minifyCSS()))
     .pipe(gulp.dest(outputDir + 'css'))
     .pipe(connect.reload())
 });
